@@ -19,7 +19,7 @@
 
     describe("spawn.js", function() {
       describe("#spawn", function() {
-        it("should should spawn a worker and end", function(done) {
+        it("should spawn a worker and end", function(done) {
           spawn(function (cb) {
             cb();
           }, function () {
@@ -27,7 +27,7 @@
           });
         });
 
-        it("should should spawn a worker and send a reply", function(done) {
+        it("should spawn a worker and send a reply", function(done) {
           spawn(function (cb) {
             cb(null, "test");
           }, function (err, msg) {
@@ -37,7 +37,7 @@
           });
         });
 
-        it("should should spawn a worker with an argument and send a reply", function(done) {
+        it("should spawn a worker with an argument and send a reply", function(done) {
           spawn(function (msg, cb) {
             cb(null, msg);
           }, "test", function (err, msg) {
