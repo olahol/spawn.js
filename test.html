@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>spawn.js tests</title>
+  <link rel="stylesheet" media="all" href="vendor/mocha.css">
+</head>
+<body>
+  <div id="mocha"></div>
+  <div id="messages"></div>
+  <div id="fixtures"></div>
+  <script src="vendor/mocha.js"></script>
+  <script src="vendor/chai.js"></script>
+  <script src="spawn.js"></script>
+  <script>
+    var expect = chai.expect;
+
+    mocha.setup("bdd");
+
+    describe("spawn.js", function() {
+      describe("#spawn", function() {
+        it("should should spawn a worker and end", function(done) {
+          spawn(function (cb) {
+            cb();
+          }, function () {
+            done();
+          });
+        });
+
+        it("should should spawn a worker and send a reply", function(done) {
+          spawn(function (cb) {
+            cb(null, "test");
+          }, function (err, msg) {
+            expect(err).to.equal(null);
+            expect(msg).to.equal("test");
+            done();
+          });
+        });
+
+        it("should should spawn a worker with an argument and send a reply", function(done) {
+          spawn(function (msg, cb) {
+            cb(null, msg);
+          }, "test", function (err, msg) {
+            expect(err).to.equal(null);
+            expect(msg).to.equal("test");
+            done();
+          });
+        });
+
+        it("should return an error", function(done) {
+          spawn(function (cb) {
+            cb(new Error("test"));
+          }, function (err, msg) {
+            expect(err).to.exist;
+            done();
+          });
+        });
+
+        it("should return an error", function(done) {
+          spawn(function (cb) {
+            cb(null, msg);
+          }, function (err, msg) {
+            expect(err).to.exist;
+            done();
+          });
+        });
+
+      });
+    });
+
+    mocha.run();
+  </script>
+</body>
+</html>
