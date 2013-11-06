@@ -2,8 +2,18 @@
 
 A tiny javascript library for spinning up one off web workers.
 
-# Example
+# Examples
 
+Hello world:
+```js
+spawn(function (done) {
+  done(null, "Hello world!")
+}, function (err, msg) {
+  console.log(msg);
+});
+```
+
+Calculate a sequence of the first 100000 fibonacci numbers:
 ```js
 var n = 1000000;
 
@@ -27,9 +37,10 @@ spawn(function (n, done) {
 
 ## Documentation
 
-### spawn(fn([args..], done(err, [result..])), [args..], cb(err, [result..]))
+### spawn(fn, [args..], cb)
 
 Create a one off web worker with function `fn` passing in an optional
-number of arguments `args`. `cb` is called when `done` is called from
-the web worker, done also terminates the web worker. Errors thrown in
-the web worker are not propagated.
+number of arguments `args`. The last argument to `fn` is a callback `done`
+which takes as its first argument an error. `cb` is called when `done` is
+called from the web worker, `done` also terminates the web worker. Errors
+thrown in the web worker are captured in the first parameter to `cb`.
