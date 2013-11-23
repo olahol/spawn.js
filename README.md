@@ -15,10 +15,7 @@ spawn(function (done) {
 
 Calculate a sequence of the first 100000 fibonacci numbers:
 ```js
-var n = 1000000;
-
-var start = new Date();
-spawn(function (n, done) {
+var fib = function (n, done) {
   var fibs = [0,1];
 
   for (var i = 0; i < n - 2; i++) {
@@ -26,7 +23,12 @@ spawn(function (n, done) {
   }
 
   done(null, fibs);
-}, n, function (err, result) {
+};
+
+var start = new Date()
+  , n = 1000000;
+
+spawn(fib, n, function (err, result) {
   if (err) { return console.log(err); }
 
   var ms = (new Date()).getTime() - start.getTime();
